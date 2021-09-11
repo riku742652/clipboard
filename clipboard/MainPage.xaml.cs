@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,7 +30,11 @@ namespace clipboard
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-
+            string textValue = inputText.Text;
+            DataPackage dataPackage = new DataPackage();
+            dataPackage.SetText(textValue);
+            Clipboard.SetContent(dataPackage);
         }
+
     }
 }
