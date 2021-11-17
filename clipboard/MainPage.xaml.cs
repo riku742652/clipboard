@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Storage;
 
 // 空白ページの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x411 を参照してください
 
@@ -30,11 +31,25 @@ namespace clipboard
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            string textValue = inputText.Text;
+            string textKey = inputKey.Text;
+            string textValue = inputKey.Text;
+
             DataPackage dataPackage = new DataPackage();
             dataPackage.SetText(textValue);
             Clipboard.SetContent(dataPackage);
+            ApplicationDataContainer container = ApplicationData.Current.LocalSettings;
+            container.Values[textKey] = textValue;
+
         }
 
+        private void textBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void textBlock3_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

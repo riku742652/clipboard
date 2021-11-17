@@ -9,10 +9,16 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBox x:Name="inputText" HorizontalAlignment="Left" Margin="150,208,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="370" MaxWidth="370"/>
-        <Button x:Name="copyButton" Content="コピー" Margin="558,208,0,0" VerticalAlignment="Top" Click="button_Click"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="101,96,0,0" Text="カテゴリA" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"/>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="150,172,0,0" Text="テスト用ID" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"/>
+        <TextBox x:Name="inputKey" HorizontalAlignment="Left" Margin="150,208,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" MaxWidth="370"/>
+        <TextBox x:Name="inputValue" HorizontalAlignment="Left" Margin="360,208,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+        <Button x:Name="copyButton" Content="登録" Margin="740,208,0,0" VerticalAlignment="Top" Click="button_Click"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="101,96,0,0" Text="登録" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" SelectionChanged="textBlock_SelectionChanged"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="150,172,0,0" Text="登録名" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="318,215,0,0" Text="→" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="375,175,0,0" Text="値" TextWrapping="Wrap" VerticalAlignment="Top" SelectionChanged="textBlock3_SelectionChanged"/>
+        <ListView x:Name="listBox" Margin="0,306,0,357">
+            <ListViewItem>aaa</ListViewItem>
+        </ListView>
 
     </Grid>
 </Page>
