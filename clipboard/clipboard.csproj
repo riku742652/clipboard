@@ -119,6 +119,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\AbstractClipboardData.cs" />
+    <Compile Include="Data\ClipboardHistoryData.cs" />
+    <Compile Include="Data\ClipboardCurrentData.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
