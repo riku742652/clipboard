@@ -16,9 +16,19 @@
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="150,172,0,0" Text="登録名" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"/>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="318,215,0,0" Text="→" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="375,175,0,0" Text="値" TextWrapping="Wrap" VerticalAlignment="Top" SelectionChanged="textBlock3_SelectionChanged"/>
-        <ListView x:Name="listBox" Margin="0,306,0,357">
-            <ListViewItem>aaa</ListViewItem>
+        <ListView x:Name="copyTextList" ItemsSource="{x:Bind CopyTexts}" Margin="0,500,0,0" SelectionChanged="copyTextList_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding key}" Grid.Column="0"></TextBlock>
+                        <TextBlock Text="{Binding value}" Grid.Column="1"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-
     </Grid>
 </Page>

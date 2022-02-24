@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using Windows.UI.Core;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 // 空白ページの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x411 を参照してください
 
@@ -34,13 +26,15 @@ namespace clipboard
         private void button_Click(object sender, RoutedEventArgs e)
         {
             string textKey = inputKey.Text;
-            string textValue = inputKey.Text;
+            string textValue = inputValue.Text;
+
+            if (textKey == null || textValue == null) return;
 
             DataPackage dataPackage = new DataPackage();
             dataPackage.SetText(textValue);
             Clipboard.SetContent(dataPackage);
-            ApplicationDataContainer container = ApplicationData.Current.LocalSettings;
-            container.Values[textKey] = textValue;
+
+            CopyTexts.Add(new CopyText { key = textKey, value = textValue });
 
         }
 
@@ -53,6 +47,31 @@ namespace clipboard
         {
 
         }
+        public class CopyText
+        {
+            public string key { get; set; }
+            public string value { get; set; }
+        }
+        ObservableCollection<CopyText> _CopyTexts = new ObservableCollection<CopyText>();
+
+        public ObservableCollection<CopyText> CopyTexts
+        {
+            get { return this._CopyTexts; }
+        }
+
+        private void copyTextList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // タップしたアイテムのアイテムを取得
+            // ここでは、文字列をリストビューに表示していたので、String でキャスト
+
+            if (copyTextList.SelectedItem == null) return;
+            CopyText item = (CopyText)copyTextList.SelectedItem;
+            DataPackage dataPackage = new DataPackage();
+            dataPackage.SetText(item.value);
+            Clipboard.SetContent(dataPackage);
+
+
+        }
 
         void SetupEventHandlers()
         {
@@ -61,10 +80,20 @@ namespace clipboard
             bool notGetClipboardCurrentYet = true;
             Clipboard.ContentChanged += async (s, e) =>
             {
+
                 var result = await Data.ClipboardCurrentData.TryUpdateAsync();
                 notGetClipboardCurrentYet = !result;
-            };
+                DataPackageView dataPackageView = Clipboard.GetContent();
+                if (dataPackageView.Contains(StandardDataFormats.Text))
+                {
+                    string text = await dataPackageView.GetTextAsync();
+                    // To output the text from this example, you need a TextBlock control
+                    DataPackage dataPackage = new DataPackage();
+                    dataPackage.SetText(text);
+                   // listBox.Items.Add(text);
+                }
 
+            };
             // クリップボードの履歴に変化があったとき
             // ※ ウインドウにフォーカスがないと取得に失敗する⇒フラグを立てておく
             bool notGetClipboardHistoryYet = Clipboard.IsHistoryEnabled();
@@ -163,5 +192,9 @@ namespace clipboard
             Clipboard.ClearHistory();
         }
 
+        private void copyTextList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
